@@ -5,17 +5,21 @@ import { Customer } from "./components/Customer";
 import BalanceDisplay from "./components/BalanceDisplay";
 
 function App() {
-  const fullName = useSelector((state) => state.customer.fullName);
+  const { fullName } = useSelector((state) => state.customer);
 
   return (
     <div>
       <h1>🏦 The React-Redux Bank ⚛️</h1>
-      { !fullName && <CreateCustomer /> }
-      <Customer />
-      <AccountOperations />
-      <BalanceDisplay />
+      {!fullName && <CreateCustomer />}
+      {fullName && (
+        <>
+          <Customer />
+          <AccountOperations />
+          <BalanceDisplay />
+        </>
+      )}
     </div>
   );
 }
 
-export default App
+export default App;
