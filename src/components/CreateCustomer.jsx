@@ -10,7 +10,13 @@ export const CreateCustomer = () => {
 
   function handleClick() {
     if (!fullName || !nationalId) return;
-    dispatch(createCustomer(fullName, nationalId));
+    dispatch(
+      createCustomer({
+        fullName,
+        nationalId,
+        createdAt: new Date().toISOString(),
+      })
+    );
   }
 
   return (

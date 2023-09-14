@@ -6,6 +6,7 @@ import {
   requestLoan,
   withdraw,
 } from "../store/slices/accountSlice";
+import { convertCurrencyAndDeposit } from "../store/slices/thunks";
 
 export const AccountOperations = () => {
   const [depositAmount, setDepositAmount] = useState("");
@@ -24,9 +25,9 @@ export const AccountOperations = () => {
 
   function handleDeposit() {
     if (!depositAmount) return;
-    dispatch(deposit(depositAmount, currency));
+    dispatch(convertCurrencyAndDeposit(depositAmount, currency));
     setDepositAmount("");
-    setCurrency("");
+    setCurrency("USD");
   }
 
   function handleWithdrawal() {
@@ -37,7 +38,7 @@ export const AccountOperations = () => {
 
   function handleRequestLoan() {
     if (!loanAmount || !loanPurpose) return;
-    dispatch(requestLoan(loanAmount, loanPurpose));
+    dispatch(requestLoan({ amount: loanAmount, purpose: loanPurpose }));
     setLoanAmount("");
     setLoanPurpose("");
   }
@@ -67,7 +68,7 @@ export const AccountOperations = () => {
           </select>
 
           <button onClick={handleDeposit} disabled={isLoading}>
-            { isLoading ? 'Converting...' : `Deposit ${depositAmount}` }
+            {isLoading ? "Converting..." : `Deposit ${depositAmount}`}
           </button>
         </div>
 
